@@ -1,9 +1,24 @@
+#root {
+    height: 100%;
+}
+
+#drum-machine {
+    height: 100%;
+    width: 80vmax;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
 .keyPad {
-    display: inline-flex;
-    flex-direction: row;
+    display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
 }
 
-.drum-pad {
-    flex: 1 0 21%;
+.drum-pad-container {
+    flex: 1 0 30%;
 }
+
+

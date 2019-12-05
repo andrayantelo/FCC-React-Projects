@@ -1,6 +1,8 @@
 export const SELECTED_AUDIO = 'SELECTED_AUDIO';
 export const MUTE_AUDIO = 'MUTE_AUDIO';
 export const CHANGE_VOLUME = 'CHANGE_VOLUME';
+export const TOGGLE_BANK = 'TOGGLE_BANK';
+export const CHANGE_TITLE = 'CHANGE_TITLE';
 
 export const selectAudio = (audio) => {
     return {
@@ -20,6 +22,20 @@ export const changeVolume = (volume) => {
     return {
         type: CHANGE_VOLUME,
         payload: volume
+    }
+}
+
+export const toggleBank =  (bank) => {
+    return {
+        type: TOGGLE_BANK,
+        payload: bank
+    }
+}
+
+export const changeTitle = (title) => {
+    return {
+        type: CHANGE_TITLE,
+        payload: title
     }
 }
 

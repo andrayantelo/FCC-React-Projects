@@ -1,20 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Key from './Key';
-import { audioLinks } from '../apis/soundlinks.js';
+import { toggleBank } from '../actions';
+import { audioLinks, altAudioLinks } from '../apis/soundlinks.js';
 
 
-const keyNames = ['Q', 'W', 'E', 'A',
-  'S', 'D', 'Z', 'X', 'C']
-
-const KeyList = () => {
-    const renderedList = keyNames.map((keyName, index) => {
-        return <Key key={keyName} keyName={keyName} audioSrc={audioLinks[index]} />
+const KeyList = (props) => {
+    const audioSrc = props.bank? altAudioLinks: audioLinks;
+    const renderedList = audioSrc.map((keyName, index) => {
+        return <Key key={audioSrc[index].id} audioSrc={audioSrc[index]} />
     })
     return (
-        <div>
+        <div className="ui inverted segment">
             {renderedList} 
         </div>
     )
 }
 
-export default KeyList;
+const mapStateToProps = (state) => {
+    return { bank: state.bank }
+}
+
+
+export default connect(
+    mapStateToProps,
+    { toggleBank }
+)(KeyList);

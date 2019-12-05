@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { selectAudio, muteAudio } from '../actions';
+import { selectAudio, muteAudio, changeTitle } from '../actions';
 import './style.css';
 
 class Key extends Component {
     handleClick = (event) => {
         this.props.selectAudio(this.props.audioSrc);
-        const audioId = this.props.audioSrc.name;
+        this.props.changeTitle(this.props.audioSrc.name);
+        const audioId = this.props.audioSrc.keyName;
         const audio = document.getElementById(audioId);
         audio.play();
     }
@@ -18,21 +19,21 @@ class Key extends Component {
     }
 
     componentDidMount = () => {
-        document.addEventListener("keydown", e => this.handleKeyPress(e))
+        document.addEventListener("keydown", e => this.handleKeyPress(e));
     }
     render() {
         return (
-            <div className="keyPad">
+            <div className="drum-pad-container">
                 <button
-                    className="drum-pad"
+                    className="drum-pad ui inverted button"
                     onClick={this.handleClick}
                     onKeyPress={(e) => console.log(e)}
                 >
-                    {this.props.keyName}
+                    {this.props.audioSrc.keyName}
                 </button>
                 <audio
                     className="clip"
-                    id={this.props.audioSrc.name}
+                    id={this.props.audioSrc.keyName}
                     src={this.props.audioSrc.link}
                     muted={this.props.isMuted}
                 >
@@ -45,11 +46,11 @@ class Key extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return { isMuted: state.isMuted, volume: state.volume }
+    return { isMuted: state.isMuted, volume: state.volume}
 }
  
 
 export default connect(
     mapStateToProps,
-    { selectAudio, muteAudio }
+    { selectAudio, muteAudio, changeTitle }
 )(Key);

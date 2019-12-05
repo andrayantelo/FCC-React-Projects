@@ -4,7 +4,7 @@ import './style.css';
 
 const App = () => {
     return (
-        <div id="drum-machine" className="ui middle aligned grid">
+        <div id="drum-machine">
             <Display />
         </div>
     )

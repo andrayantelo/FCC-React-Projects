@@ -16,6 +16,5 @@ ReactDOM.render(
 )
 
 // TODO
-// set up the bank toggle for different sounds
 // CSS
 // transfer this into code pen boo.
