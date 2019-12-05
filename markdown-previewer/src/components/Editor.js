@@ -24,7 +24,7 @@ const Editor = (props) => {
 
     return (
         <div className="ui segment">
-            <h3 class="ui block header">
+            <h3 className="ui block header">
                 Editor
             </h3>
             <textarea

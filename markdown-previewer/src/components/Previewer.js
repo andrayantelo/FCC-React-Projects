@@ -11,7 +11,7 @@ const Previewer = (props) => {
     return (
 
         <div className="ui segment">
-            <h3 class="ui block header">
+            <h3 className="ui block header">
                 Previewer
             </h3>
             <div id="preview"

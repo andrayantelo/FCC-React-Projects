@@ -1,0 +1,38 @@
+export const audioLinks = [
+    {link: "https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3",
+     name: "Heater 1",
+     id: 0
+    },
+    {link: "https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3",
+     name: "Heater 2",
+     id: 1
+    },
+    {link: "https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3",
+     name: "Heater 3",
+     id: 2
+    },
+    {link: "https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3",
+     name: "Heater 4",
+     id: 3
+    },
+    {link: "https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3",
+     name: "Heater 6",
+     id: 4
+    },
+    {link: "https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3",
+     name: "Dsc oh",
+     id: 5
+    },
+    {link: "https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3",
+     name: "Kick-n-hat",
+     id: 6
+    },
+    {link: "https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3",
+     name: "Kick 1",
+     id: 7
+    },
+    {link: "https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3",
+     name: "Cev h2",
+     id: 8
+    }
+]

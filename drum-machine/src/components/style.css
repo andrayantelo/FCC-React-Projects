@@ -1,0 +1,9 @@
+.keyPad {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.drum-pad {
+    flex: 1 0 21%;
+}
