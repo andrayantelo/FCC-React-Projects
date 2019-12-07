@@ -21,7 +21,7 @@ const Controls = ({ isMuted,
     const handleChange = (event) => {
         const bankName = event.target.name;
         bank = 1 - bank;
-        const newTitle = bank? "Smooth Piano Kit" : "Heater Kit";
+        const newTitle = bank? "Smooth Piano" : "Heater";
         changeTitle(newTitle);
         toggleBank(bank);
         className[bankName] = 'ui teal active button';
@@ -68,7 +68,7 @@ const Controls = ({ isMuted,
                         onClick={handleChange}
                         name="heater"
                     >
-                        Heater Kit
+                        Heater
                     </button>
                 <div className="or"></div>
                     <button 
@@ -76,7 +76,7 @@ const Controls = ({ isMuted,
                         onClick={handleChange}
                         name="piano"
                     >
-                        Smooth Piano Kit
+                        Smooth Piano
                     </button>
                 </div>
             </div>
