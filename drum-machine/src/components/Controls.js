@@ -1,19 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { muteAudio, changeVolume, toggleBank, changeTitle } from '../actions';
+import { muteAudio, changeVolume, toggleBank, changeTitle, buttonClass } from '../actions';
 import './style.css';
 
-const Controls = ({ isMuted, audio, muteAudio, volume, changeVolume, bank, toggleBank, title, changeTitle}) => {
+const Controls = ({ isMuted,
+                    audio,
+                    muteAudio,
+                    volume,
+                    changeVolume,
+                    bank,
+                    toggleBank,
+                    title,
+                    changeTitle,
+                    className,
+                    buttonClass
+                    }) => {
+    const handleClick = (event) => {
+        muteAudio(!isMuted);
+    }
     const handleChange = (event) => {
-        if (event.target.name === "isMuted") {
-            muteAudio(!isMuted);
-            return
-        }
+        const bankName = event.target.name;
         bank = 1 - bank;
         const newTitle = bank? "Smooth Piano Kit" : "Heater Kit";
         changeTitle(newTitle);
         toggleBank(bank);
-        
+        className[bankName] = 'ui teal active button';
+        const inactiveButton = bankName === 'piano'? 'heater': 'piano';
+        className[inactiveButton] = 'ui teal button';
+        buttonClass(className)
     }
 
     const handleVolume = (event) => {
@@ -23,20 +37,20 @@ const Controls = ({ isMuted, audio, muteAudio, volume, changeVolume, bank, toggl
     }
 
     return (
-        <div>
-            <div className="powerContainer">
-                <input
-                    type="checkbox"
-                    name="isMuted"
-                    onChange={handleChange}
-                    checked={!isMuted}
-                />
-                <label>Power</label>
+        <div className="controlsContainer ui inverted segment">
+            <div className="powerContainer controls">
+                <button 
+                    id="powerButton"
+                    className="circular ui purple icon button"
+                    onClick={handleClick}
+                >
+                    <i className="large inverted purple power off icon"></i>
+                </button>
             </div>
-            <div className="title">
+            <div className="title controls">
                 {title}
             </div>
-            <div className="volumeControl">
+            <div className="volumeControl controls">
                 <input
                     onChange={handleVolume}
                     type="range"
@@ -46,15 +60,25 @@ const Controls = ({ isMuted, audio, muteAudio, volume, changeVolume, bank, toggl
                     max="10"
                     value={volume}
                 />
-                <label htmlFor="volume">Volume</label>
             </div>
-            <div className="bank">
-                <input
-                    type="checkbox"
-                    name="bank"
-                    onChange={handleChange}
-                    checked={bank}
-                />
+            <div className="bank controls">
+                <div className="ui large buttons">
+                    <button 
+                        className={className.heater}
+                        onClick={handleChange}
+                        name="heater"
+                    >
+                        Heater Kit
+                    </button>
+                <div className="or"></div>
+                    <button 
+                        className={className.piano}
+                        onClick={handleChange}
+                        name="piano"
+                    >
+                        Smooth Piano Kit
+                    </button>
+                </div>
             </div>
         </div>
     )
@@ -65,11 +89,12 @@ const mapStateToProps = (state) => {
              isMuted: state.isMuted,
              volume: state.volume,
              bank: state.bank,
-             title: state.title
+             title: state.title,
+             className: state.className
             }
 }
 
 export default connect(
     mapStateToProps,
-    { muteAudio, changeVolume, toggleBank, changeTitle }
+    { muteAudio, changeVolume, toggleBank, changeTitle, buttonClass}
 )(Controls);

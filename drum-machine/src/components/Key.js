@@ -12,7 +12,7 @@ class Key extends Component {
         audio.play();
     }
     handleKeyPress = (event) => {
-        if (event.key.toUpperCase() === this.props.keyName) {
+        if (event.key.toUpperCase() === this.props.audioSrc.keyName) {
             this.handleClick();
         }
         
@@ -25,7 +25,7 @@ class Key extends Component {
         return (
             <div className="drum-pad-container">
                 <button
-                    className="drum-pad ui inverted button"
+                    className="drum-pad ui inverted pink button"
                     onClick={this.handleClick}
                     onKeyPress={(e) => console.log(e)}
                 >

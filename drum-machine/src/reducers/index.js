@@ -1,5 +1,10 @@
 import { combineReducers } from 'redux';
-import { SELECTED_AUDIO, MUTE_AUDIO, CHANGE_VOLUME, TOGGLE_BANK, CHANGE_TITLE } from '../actions';
+import { SELECTED_AUDIO,
+         MUTE_AUDIO,
+         CHANGE_VOLUME,
+         TOGGLE_BANK,
+         CHANGE_TITLE,
+         CHANGE_BUTTON_CLASS } from '../actions';
 
 const selectAudioReducer = (initialState = {}, action) => {
     if (action.type === SELECTED_AUDIO) {
@@ -29,7 +34,14 @@ const toggleBankReducer = (bank=0, action) => {
     return bank;
 }
 
-const changeTitleReducer = (title='', action) => {
+const buttonClassReducer = (className={piano: "ui teal button", heater: "ui teal active button"}, action) => {
+    if (action.type === CHANGE_BUTTON_CLASS) {
+        return action.payload;
+    }
+    return className;
+}
+
+const changeTitleReducer = (title='Heater', action) => {
     if (action.type === CHANGE_TITLE) {
         return action.payload;
     }
@@ -41,6 +53,7 @@ export default combineReducers({
     isMuted: muteAudioReducer,
     volume: changeVolumeReducer,
     bank: toggleBankReducer,
-    title: changeTitleReducer
+    title: changeTitleReducer,
+    className: buttonClassReducer
 })
 

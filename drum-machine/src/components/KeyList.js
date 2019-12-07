@@ -11,7 +11,7 @@ const KeyList = (props) => {
         return <Key key={audioSrc[index].id} audioSrc={audioSrc[index]} />
     })
     return (
-        <div className="ui inverted segment">
+        <div className="keyPad ui inverted segment">
             {renderedList} 
         </div>
     )
