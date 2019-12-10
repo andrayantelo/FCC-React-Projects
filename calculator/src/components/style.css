@@ -1,0 +1,14 @@
+#root {
+    height: 100%;
+}
+
+.outer-container {
+    height: 100%;
+    width: 35%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
