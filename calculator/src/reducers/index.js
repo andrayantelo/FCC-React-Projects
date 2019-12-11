@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux';
-
-const dummyReducer = () => {
-    return 'dummy';
-}
-
+import inputReducer from './inputReducer';
+import outputReducer from './outputReducer';
 
 export default combineReducers({
-    dummy: dummyReducer
+    input: inputReducer,
+    output: outputReducer
 })

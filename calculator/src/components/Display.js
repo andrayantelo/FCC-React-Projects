@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 
-const Display = () => {
+const Display = ({output, input}) => {
+    useEffect(() => {
+        console.log("output: " + output);
+        console.log("input: " + input);
+    }, [output, input])
+
     return (
         <div id="display">
-            0
+            {output}
         </div>
     )        
 }
 
-export default Display;
+const mapStateToProps = (state) => {
+    return { output: state.output,
+             input: state.input }
+}
+
+export default connect(
+    mapStateToProps
+)(Display);
