@@ -2,8 +2,8 @@ import React from 'react';
 
 const Display = () => {
     return (
-        <div>
-            Here you will see numbers
+        <div id="display">
+            0
         </div>
     )        
 }

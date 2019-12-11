@@ -4,7 +4,6 @@
 
 .outer-container {
     height: 100%;
-    width: 35%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -12,3 +11,102 @@
     justify-content: center;
     align-items: center;
 }
+
+#display {
+    width: 100%;
+    font-size: 5rem;
+    height: 80px;
+    border: none;
+    background-color: #252525;
+    color: #fff;
+    text-align: right;
+    padding: 20px 20px 0px 10px;
+}
+
+.keyPad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+}
+  
+  #equals {
+    height: 100%;
+    grid-area: 2 / 4 / 6 / 5;
+  }
+
+  #equals > button {
+      background-color: #94D0FF;
+  }
+
+  .ui.button.operator {
+      background-color: #8795E8;
+  }
+
+  .ui.button.all-clear {
+      background-color: #FF6AD5;
+  }
+
+  .ui.button.decimal-symbol {
+      background-color: #C774E8;
+  }
+  .ui.button.number {
+      background-color: #AD8CFF;
+  }
+
+.ui.button {
+    width: 80px;
+    height: 100%;
+}
+
+@media only screen
+and (max-width : 515px) {
+    .outer-container {
+        height: 100vmax;
+        margin: 0;
+        display: block;
+    }
+    #display {
+        width: 100%;
+        font-size: 5rem;
+        height: 10vmax;
+        padding-top: 30px;
+        margin-top: 40px;
+        margin-bottom: 80px;
+    }
+    .keyPad {
+        height: 60vmax;
+    }
+    .ui.button {
+        width: 80px;
+        font-size: 1.2rem;
+    }
+
+   
+}
+
+@media only screen 
+  and (min-width: 768px) 
+  and (max-width: 1024px) {
+    .outer-container {
+        height: 100vmax;
+        margin: 0;
+        display: block;
+    }
+    #display {
+        width: 100%;
+        font-size: 10rem;
+        height: 20vmax;
+        padding-top: 80px;
+        margin-top: 40px;
+    }
+    .keyPad {
+        height: 70vmax;
+    }
+    .ui.button {
+        width: 150px;
+        font-size: 2rem;
+    }
+}
+
+
+
