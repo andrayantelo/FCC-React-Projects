@@ -1,6 +1,7 @@
 export const UPDATE_INPUT = 'UPDATE_INPUT';
 export const UPDATE_OUTPUT = 'UPDATE_OUTPUT';
 export const CLEAR = 'CLEAR';
+export const MAKE_DECIMAL = 'MAKE_DECIMAL';
 
 export const updateInput = (input) => {
     return {
@@ -16,9 +17,16 @@ export const updateOutput = (output) => {
     }
 }
 
-export const clear = (value) => {
+export const clear = () => {
     return {
         type: CLEAR,
+        payload: "0"
+    }
+}
+
+export const makeDecimal = (value) => {
+    return {
+        type: MAKE_DECIMAL,
         payload: value
     }
 }

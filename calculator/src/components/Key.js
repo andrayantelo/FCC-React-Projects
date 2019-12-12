@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateOutput, clear } from '../actions';
+import { updateOutput, clear, makeDecimal } from '../actions';
 
-const Key = ({keyType, updateOutput, clear, output}) => {
+const Key = ({keyType, updateOutput, clear, output, makeDecimal}) => {
     const btnClass = keyType.type || "";
 
     const handleClick = (event) => {
@@ -13,18 +13,17 @@ const Key = ({keyType, updateOutput, clear, output}) => {
             updateOutput(key);
         }
         else if (elType === "all-clear") {
-            clear(0);
+            clear("0");
         }
         else if (elType === "decimal-symbol") {
-            console.log('clicked decimal');
-            console.log(output);
-            // TODO figure this out
-            if (output) {
-                updateOutput(key);
+            if (output.includes('.')) {
+                return;
             }
+            console.log(key);
+            makeDecimal(key);
         }
             
-    }
+    };
 
     return (
         <div className={`${btnClass}`}>
@@ -48,5 +47,6 @@ const mapStateToProps = (state) => {
 export default connect(
     mapStateToProps,
     { updateOutput,
-      clear }
+      clear,
+      makeDecimal }
 )(Key);
