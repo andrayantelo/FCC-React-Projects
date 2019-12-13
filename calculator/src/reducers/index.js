@@ -1,8 +1,14 @@
 import { combineReducers } from 'redux';
-import inputReducer from './inputReducer';
-import outputReducer from './outputReducer';
+import displayReducer from './displayReducer';
+
+/* 
+state = {
+    display: "0",
+    total: 0
+}
+*/
+
 
 export default combineReducers({
-    input: inputReducer,
-    output: outputReducer
+    display : displayReducer
 })

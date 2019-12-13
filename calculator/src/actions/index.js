@@ -1,32 +1,26 @@
-export const UPDATE_INPUT = 'UPDATE_INPUT';
-export const UPDATE_OUTPUT = 'UPDATE_OUTPUT';
+export const UPDATE_DISPLAY = 'UPDATE_DISPLAY';
 export const CLEAR = 'CLEAR';
-export const MAKE_DECIMAL = 'MAKE_DECIMAL';
+export const CALCULATE = 'CALCULATE';
 
-export const updateInput = (input) => {
+export const updateDisplay = (display) => {
     return {
-        type: UPDATE_INPUT,
-        payload: input
+        type: UPDATE_DISPLAY,
+        payload: display
     }
 }
 
-export const updateOutput = (output) => {
-    return {
-        type: UPDATE_OUTPUT,
-        payload: output
-    }
-}
-
-export const clear = () => {
+export const clear = (display) => {
     return {
         type: CLEAR,
-        payload: "0"
+        payload: display
     }
 }
 
-export const makeDecimal = (value) => {
+export const calculate = (num) => {
     return {
-        type: MAKE_DECIMAL,
-        payload: value
+        type: CALCULATE,
+        payload: num
     }
 }
+
+
