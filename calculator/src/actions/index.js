@@ -1,18 +1,32 @@
-export const UPDATE_DISPLAY = 'UPDATE_DISPLAY';
+export const PRESS_NUMBER = 'PRESS_NUMBER';
+export const PRESS_OPERATOR = 'PRESS_OPERATOR';
+export const PRESS_DECIMAL = 'PRESS_DECIMAL';
 export const CLEAR = 'CLEAR';
 export const CALCULATE = 'CALCULATE';
 
-export const updateDisplay = (display) => {
+export const pressNumber = (num) => {
     return {
-        type: UPDATE_DISPLAY,
-        payload: display
+        type: PRESS_NUMBER,
+        payload: num
     }
 }
 
-export const clear = (display) => {
+export const pressDecimal = () => {
     return {
-        type: CLEAR,
-        payload: display
+        type: PRESS_DECIMAL
+    }
+}
+
+export const clear = () => {
+    return {
+        type: CLEAR
+    }
+}
+
+export const pressOperator = (operator) => {
+    return {
+        type: PRESS_OPERATOR,
+        action: operator
     }
 }
 

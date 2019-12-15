@@ -4,11 +4,12 @@ import displayReducer from './displayReducer';
 /* 
 state = {
     display: "0",
-    total: 0
+    formula: "0",
+
 }
 */
 
 
 export default combineReducers({
-    display : displayReducer
+    screen : displayReducer
 })

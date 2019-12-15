@@ -1,20 +1,25 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-const Display = ({ display }) => {
+const Display = ({ screen }) => {
     useEffect(() => {
-        console.log("display: " + display);
-    }, [display])
+        console.log("display: " + screen.display);
+    }, [screen])
 
     return (
-        <div id="display">
-            {display}
+        <div>
+            <div>
+                {screen.formula}
+            </div>
+            <div id="display">
+                {screen.display}
+            </div>
         </div>
     )        
 }
 
 const mapStateToProps = (state) => {
-    return { display: state.display }
+    return { screen: state.screen }
 }
 
 export default connect(
