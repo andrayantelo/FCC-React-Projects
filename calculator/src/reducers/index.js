@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import displayReducer from './displayReducer';
+import formulaReducer from './formulaReducer';
 
 /* 
 state = {
@@ -11,5 +12,6 @@ state = {
 
 
 export default combineReducers({
-    screen : displayReducer
+    display : displayReducer,
+    formula : formulaReducer
 })

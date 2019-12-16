@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { clear, calculate, pressNumber, pressDecimal } from '../actions';
+import { clear, calculate, pressNumber, pressDecimal, pressOperator } from '../actions';
 
-const Key = ({keyType, clear,calculate, pressNumber, pressDecimal}) => {
+const Key = ({keyType, clear,calculate, pressNumber, pressDecimal, pressOperator, formula }) => {
     const btnClass = keyType.type || "";
 
     const handleClick = (event) => {
@@ -17,18 +17,15 @@ const Key = ({keyType, clear,calculate, pressNumber, pressDecimal}) => {
         }
         else if (elType === "decimal-symbol") {
             pressDecimal();
-            //updateFormula(key);
-            //updateDisplay(key);
         }
         else if (elType === "operator") {
             if (key === "x") {
                 key = "*";
             }
-            //updateFormula(key);
-            //updateDisplay(key);
+            pressOperator(key);
         }
         else {
-            calculate(key);
+            calculate(formula);
         }
             
     };
@@ -48,13 +45,18 @@ const Key = ({keyType, clear,calculate, pressNumber, pressDecimal}) => {
     )
 }
 
+const mapStateToProps = (state) => {
+    return { formula: state.formula }
+}
+
 
 
 export default connect(
-    null,
+    mapStateToProps,
     { 
       clear,
       calculate,
       pressNumber,
-      pressDecimal }
+      pressDecimal,
+      pressOperator }
 )(Key);

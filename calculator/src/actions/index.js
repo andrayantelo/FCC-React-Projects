@@ -26,14 +26,14 @@ export const clear = () => {
 export const pressOperator = (operator) => {
     return {
         type: PRESS_OPERATOR,
-        action: operator
+        payload: operator
     }
 }
 
-export const calculate = (num) => {
+export const calculate = (formula) => {
     return {
         type: CALCULATE,
-        payload: num
+        payload: formula
     }
 }
 
