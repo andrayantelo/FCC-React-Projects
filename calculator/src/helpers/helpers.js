@@ -1,3 +1,8 @@
+const replaceDoubleMinus = (expression) => {
+    let regExp = /--/;
+    return expression.replace(regExp, "+");
+}
+
 export const calculate = (expression) => {
     /*console.log(expression);
     const parsed = expression.map((symbol, index) => {
@@ -10,7 +15,8 @@ export const calculate = (expression) => {
     })
     console.log(parsed);
     */
-   return eval(expression.join(''))
+    expression = replaceDoubleMinus(expression.join(''));
+    return eval(expression)
 } 
 
 export const hasLeadingZeros = (num) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { clear, calculate, pressNumber, pressDecimal, pressOperator } from '../actions';
 
-const Key = ({keyType, clear,calculate, pressNumber, pressDecimal, pressOperator, formula }) => {
+const Key = ({keyType, clear,calculate, pressNumber, pressDecimal, pressOperator }) => {
     const btnClass = keyType.type || "";
 
     const handleClick = (event) => {
@@ -25,13 +25,13 @@ const Key = ({keyType, clear,calculate, pressNumber, pressDecimal, pressOperator
             pressOperator(key);
         }
         else {
-            calculate(formula);
+            calculate();
         }
             
     };
 
     return (
-        <div className={`${btnClass}`}>
+        <div className={btnClass}>
             <button 
                 id={keyType.name}
                 className="ui button"
@@ -45,14 +45,8 @@ const Key = ({keyType, clear,calculate, pressNumber, pressDecimal, pressOperator
     )
 }
 
-const mapStateToProps = (state) => {
-    return { formula: state.formula }
-}
-
-
-
 export default connect(
-    mapStateToProps,
+    null,
     { 
       clear,
       calculate,
