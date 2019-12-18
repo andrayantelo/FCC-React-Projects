@@ -10,7 +10,7 @@ let initialSummary =  {
 };
 
 export default (summary=initialSummary, action) => {
-    const { formula, result } = summary;
+    const { formula } = summary;
     let prev = formula[formula.length - 1];
     
     switch(action.type) {
