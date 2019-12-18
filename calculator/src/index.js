@@ -6,8 +6,13 @@ import App from './components/App';
 import reducers from './reducers';
 
 const myLogger = (store) => (next) => (action) => {
-    console.log("Logged action: ", action);
-    next(action);
+    console.group(action.type);
+    console.info('dispatching', action);
+    let result = next(action);
+    console.log("Next state.summary.formula: ", store.getState().summary.formula)
+    console.log("Next state: ", store.getState());
+    console.groupEnd();
+    return result;
 }
 
 const store = createStore(reducers, {}, applyMiddleware(myLogger));
