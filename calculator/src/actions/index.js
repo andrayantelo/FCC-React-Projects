@@ -30,10 +30,9 @@ export const pressOperator = (operator) => {
     }
 }
 
-export const calculate = (formula) => {
+export const calculate = () => {
     return {
-        type: CALCULATE,
-        payload: formula
+        type: CALCULATE
     }
 }
 

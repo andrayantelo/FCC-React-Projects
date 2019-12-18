@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-const Display = ({ display, formula }) => {
+const Display = ({ summary }) => {
+    const {formula, result} = summary;
     useEffect(() => {
-        console.log("display: " + display);
+        console.log("display: " + formula[formula.length - 1]);
         console.log("formula: " + formula);
-    }, [display, formula])
+    }, [formula])
 
+
+    const display = formula[formula.length - 1]? formula[formula.length - 1]: 0;
     return (
         <div>
             <div>
@@ -14,7 +17,7 @@ const Display = ({ display, formula }) => {
                 {formula}
             </div>
             <div id="display">
-                {display}
+                {result? result: display}
             </div>
         </div>
     )        
@@ -22,8 +25,7 @@ const Display = ({ display, formula }) => {
 
 const mapStateToProps = (state) => {
     return { 
-                display: state.display,
-                formula: state.formula
+                summary: state.summary
            }
 }
 
