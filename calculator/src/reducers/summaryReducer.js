@@ -45,6 +45,12 @@ export default (summary=initialSummary, action) => {
                     formula: [...formula, "0."]
                 }
             }
+            else if (!Number.isInteger(prev) && !prev.includes(".")) {
+                return {
+                    ...summary,
+                    formula: [...formula.slice(0, -1), prev + "."]
+                }
+            }
             else if (prev.includes(".")) {
                 return summary;
             }
