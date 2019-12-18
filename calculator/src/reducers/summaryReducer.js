@@ -99,7 +99,8 @@ export default (summary=initialSummary, action) => {
             const total = calculate(formula);
             return {
                 ...summary,
-                result: total};
+                result: total,
+                formula: [total]};
         case CLEAR:
             return initialSummary;
         default:
