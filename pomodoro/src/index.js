@@ -14,6 +14,7 @@ const logger = (store) => (next) => (action) => {
     return result;
 };
 
+// second argument is initial state
 const store = createStore(reducers, {}, applyMiddleware(logger));
 
 ReactDOM.render(
