@@ -1,9 +1,12 @@
 import { combineReducers } from 'redux';
-
-const dummyReducer = () => {
-    return "dummy";
-}
+import breakLengthReducer from './breakLengthReducer';
+import sessionLengthReducer from './sessionLengthReducer';
+import sessionReducer from './sessionReducer';
+import timerReducer from './timerReducer';
 
 export default combineReducers({
-    dummy: dummyReducer
+    breakLength: breakLengthReducer,
+    sessionLength: sessionLengthReducer,
+    session: sessionReducer,
+    timer: timerReducer
 })

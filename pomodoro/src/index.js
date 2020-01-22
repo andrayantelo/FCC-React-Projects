@@ -14,8 +14,16 @@ const logger = (store) => (next) => (action) => {
     return result;
 };
 
+const preloadedState = {
+    breakLength: 5,
+    sessionLength: 25,
+    session: true,
+    timer: {
+
+    }
+}
 // second argument is initial state
-const store = createStore(reducers, {}, applyMiddleware(logger));
+const store = createStore(reducers, preloadedState, applyMiddleware(logger));
 
 ReactDOM.render(
     <Provider store={store}>
