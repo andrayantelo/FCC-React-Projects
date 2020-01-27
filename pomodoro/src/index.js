@@ -14,14 +14,19 @@ const logger = (store) => (next) => (action) => {
     return result;
 };
 
+// parts of state that can be component side:
+// timeRemaining, timerRunning, elapsed
+
 const preloadedState = {
-    breakLength: 5,
-    sessionLength: 25,
-    session: true,
-    timer: {
+    state : {
+        breakLength: 5*60000,
+        sessionLength: 25*60000,
+        session: true,
         startTime: 0,
         stopTime: 0,
-        elapsed: 0
+        timerRunning: false,
+        elapsed: 0,
+        timeRemaining: 25*60000
     }
 }
 

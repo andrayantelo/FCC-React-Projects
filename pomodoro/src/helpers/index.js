@@ -1,5 +1,27 @@
-export const formatTime = (time) => {
-    return `${time}:00`;
+const leadingZero = (num) => {
+    if (num < 10 && num >=0 ) {
+        return `0${num}`;
+    }
+    return num;
+}
+
+export const formatTime = (milliseconds) => {
+    // from milliseconds to
+    // min:ss
+    let seconds = (leadingZero((milliseconds/1000)%60));
+    let minutes = (milliseconds/(1000*60)%60);
+    
+    return `${minutes}:${seconds}`;
+}
+
+export const timeToMs = (time) => {
+    // time format mm:ss to milliseconds
+    time = time.split(":");
+    time = time.map(num => parseInt(num));
+    time[0] = time[0]*60000;
+    time[1] = time[1]*1000;
+    console.log(time);
+    return time;
 }
 
 export const startTimer = () => {
@@ -20,6 +42,10 @@ export const elapsed = (startTime, stopTime) => {
 export const convertMinToMs = (minutes) => {
     // convert minutes to milliseconds
     return minutes * 60000
+}
+
+export const convertMsToMin = (milliseconds) => {
+    return milliseconds/60000
 }
 
 export const getTimeLeft = (timeString) => {

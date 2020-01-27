@@ -4,7 +4,8 @@ import {
         UPDATE_SESSION,
         START,
         PAUSE,
-        RESET
+        RESET,
+        UPDATE_DISPLAY
      } from './types';
 
 export const updateBreak = (num, change) => {
@@ -50,5 +51,15 @@ export const pause = (stopTime) => {
 export const reset = () => {
     return {
         type: RESET
+    }
+}
+
+export const updateDisplay = (timeRemaining, elapsed) => {
+    return {
+        type: UPDATE_DISPLAY,
+        payload: {
+            timeRemaining,
+            elapsed
+        }
     }
 }

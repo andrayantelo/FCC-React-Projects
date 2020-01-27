@@ -1,33 +1,77 @@
-import { START, PAUSE, RESET } from '../actions/types';
+import {
+    START,
+    PAUSE,
+    RESET,
+    UPDATE_BREAK,
+    UPDATE_WORK,
+    UPDATE_SESSION,
+    UPDATE_DISPLAY
+}
+from '../actions/types';
 
-/* const preloadedState = {
-    breakLength: 5,
-    sessionLength: 25,
-    session: true,
-    timer: {
+/* 
+const preloadedState = {
+    state : {
+        breakLength: 5*60000,
+        sessionLength: 25*60000,
+        session: true,
         startTime: 0,
         stopTime: 0,
-        elapsed: 0
     }
 }
 */
 
 export default (state={}, action) => {
     switch(action.type) {
+        case UPDATE_BREAK:
+            if (action.payload.change === "up") {
+                return {...state, breakLength: state.breakLength + 1};
+            }
+            else if (action.payload.change === "down" && state.breakLength !== 1) {
+                return {...state, breakLength: state.breakLength - 1};
+            }
+            else {
+                return state;
+            }
+        case UPDATE_WORK:
+            if (action.payload.change === "up") {
+                console.log('increment');
+                return {...state, sessionLength: state.sessionLength + 1};
+            }
+            else if (action.payload.change === "down" && state.sessionLength !== 1) {
+                console.log('decrement');
+                return {...state, sessionLength: state.sessionLength - 1};
+            }
+            else {
+                console.log('neither');
+                return state;
+            }
+        case UPDATE_SESSION:
+            return {...state, session: !state.session};
         case START:
-            return { ...state, startTime: action.payload };
+            return {
+                ...state,
+                startTime: action.payload,
+                timerRunning: true
+            };
         case PAUSE:
             return { 
                 ...state,
                 stopTime: action.payload,
-                elapsed: action.payload - state.startTime
+                timerRunning: false
             };
         case RESET:
             return { 
                 ...state,
                 startTime: 0,
-                stopTime: 0,
-                elapsed: 0
+                stopTime: 0
+            }
+        case UPDATE_DISPLAY:
+            console.log('updating display');
+            return {
+                ...state,
+                timeRemaining: action.payload.timeRemaining,
+                elapsed: action.payload.elapsed
             }
         default:
             return state;

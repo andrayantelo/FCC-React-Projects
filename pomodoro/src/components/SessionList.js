@@ -2,18 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Session from './Session';
 import { updateBreak, updateWork } from '../actions';
+import { formatTime } from '../helpers';
 
 const SessionList = ({ breakLength, sessionLength, updateBreak, updateWork }) => {
     return (
         <div className="sessions-container">
             <Session
                 title="Break Length"
-                display= { breakLength }
+                display= { formatTime(breakLength) }
                 handler= { updateBreak }
             />
             <Session
                 title="Session Length"
-                display= { sessionLength }
+                display= { formatTime(sessionLength) }
                 handler = { updateWork }
             />
         </div>
@@ -22,8 +23,8 @@ const SessionList = ({ breakLength, sessionLength, updateBreak, updateWork }) =>
 
 const mapStateToProps = (state) => {
     return {
-        breakLength: state.breakLength,
-        sessionLength: state.sessionLength
+        breakLength: state.state.breakLength,
+        sessionLength: state.state.sessionLength
     }
 }
 
