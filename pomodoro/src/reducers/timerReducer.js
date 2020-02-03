@@ -68,10 +68,12 @@ export default (state={}, action) => {
             }
         case UPDATE_DISPLAY:
             console.log('updating display');
+            const currentSession = state.session? state.sessionLength: state.breakLength;
+            let updatedElapsed = (Date.now() - state.startTime) + state.elapsed;
             return {
                 ...state,
-                timeRemaining: action.payload.timeRemaining,
-                elapsed: action.payload.elapsed
+                timeRemaining: currentSession - updatedElapsed,
+                elapsed: (Date.now() - state.startTime) + state.elapsed
             }
         default:
             return state;

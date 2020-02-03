@@ -54,12 +54,8 @@ export const reset = () => {
     }
 }
 
-export const updateDisplay = (timeRemaining, elapsed) => {
+export const updateDisplay = () => {
     return {
-        type: UPDATE_DISPLAY,
-        payload: {
-            timeRemaining,
-            elapsed
-        }
+        type: UPDATE_DISPLAY
     }
 }

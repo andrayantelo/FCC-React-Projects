@@ -1,10 +1,143 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { updateDisplay, start, pause, reset } from '../actions';
+import React, { Component } from 'react';
 import { formatTime } from '../helpers';
 
 
+class Display extends Component {
+    constructor(props) {
+        super(props);
+        this.timerInterval = null;
+        this.state = {
+            currentSession : 25*60000,
+            timerRunning: false,
+            elapsed: 0,
+            timeRemaining: 25*60000,
+            startTime: 0,
+            stopTime: 0
+        }
+    }
+
+    handleClick = (event) => {
+        const id = event.target.id;
+
+        // get current time left
+        if (this.state.timerRunning) {
+            // if the timer is already running and someone hits start
+            // nothing happens, the timer continues
+
+            // if the timer is already running and someone hits pause
+            // the timer stops
+            if (id === "pause") {
+                console.log("pause");            
+                this.setState(() => {
+                    return {
+                        timerRunning: false,
+                        stopTime: Date.now()
+                    }
+                })
+            }
+            
+        }
+        else {
+            // if the timer is not running and someone hits start,
+            // the timer starts
+            if (id === "start") {
+                this.setState(() => {
+                    return {
+                        timerRunning: true,
+                        startTime: Date.now()
+                    }
+                })
+            }
+            // if the timer is not running and someone hits pause, nothing happens
+            // reset resets the timer ONLY if timer is not running
+            else if (id === "reset") {
+                this.setState(() => {
+                    return {
+                        startTime: 0,
+                        stopTime: 0,
+                        elapsed: 0
+                    }
+                })
+            }
+        }
+    }
+
+    updateClock = () => {
+        this.timerInterval = setInterval(() => {
+            if (this.state.timerRunning) {
+                //update timeRemaining to
+                let elapsed = (Date.now() - this.state.startTime);
+                let timeRemaining = this.state.currentSession - elapsed;
+                this.setState(() => {
+                    return {
+                        elapsed,
+                        timeRemaining
+                    }
+                })
+            }
+        }, 1000);
+    }
+
+    componentDidMount = () => {
+        this.updateClock();
+    };
+
+      componentWillUnmount = () => {
+          return () => clearInterval(this.timerInterval);
+      }
+
+    render() {
+
+        return (
+            <div className="display-container">
+                <h3 className="ui header">
+                    Session
+                </h3>
+                <div className="display">
+                    {formatTime(this.state.timeRemaining)}
+                </div>
+                <div className="controls">
+                    <i
+                        id="start"
+                        className="big play circle outline icon"
+                        onClick={this.handleClick}
+                    ></i>
+                    <i
+                        id="pause"
+                        className="big pause circle outline icon"
+                        onClick={this.handleClick}
+                    ></i>
+                    <i
+                        id="reset"
+                        className="big redo icon"
+                        onClick={this.handleClick}
+                    ></i>
+                </div>
+            </div>
+        )
+    }
+}
+
+
+export default Display;
+
+
+
+/*
+
 const Display = (props) => {
+    // startTime, elapsed, currentSession, timeRemaining
+    //let initialState = {
+    //    start: 0,
+    //    elapsed: 0,
+    //    currentSession: 25*60000,
+    //    timeRemaining: 25*60000
+    //}
+
+    const { state, setState } = initialState;
+    
+    const dispatch = useDispatch();
+
     const { breakLength,
             sessionLength,
             session,
@@ -12,7 +145,8 @@ const Display = (props) => {
             stopTime,
             timerRunning,
             elapsed,
-            timeRemaining } = props.state;
+            timeRemaining
+         } = props.state;
 
     const { start, pause, reset, updateDisplay } = props;
 
@@ -55,14 +189,13 @@ const Display = (props) => {
             if (timerRunning) {
                 //update timeRemaining to
                 // currentSession - ((Date.now() - start_time) + elapsed)
-                let updatedElapsed = (Date.now() - startTime) + elapsed;
-                let timeRemaining = currentSession - updatedElapsed;
-                console.log(formatTime(timeRemaining));
-                updateDisplay(timeRemaining, updatedElapsed);
+                //let updatedElapsed = (Date.now() - startTime) + elapsed;
+                //let timeRemaining = currentSession - updatedElapsed;
+                dispatch({type: 'UPDATE_DISPLAY'});
             }
         }, 1000);
         return () => clearInterval(interval);
-      }, [timerRunning, startTime, elapsed, currentSession, updateDisplay]);
+      }, [timerRunning]);
 
     return (
         <div className="display-container">
@@ -70,7 +203,7 @@ const Display = (props) => {
                 Session
             </h3>
             <div className="display">
-                {timerRunning? timeRemaining : formatTime(currentSession) }
+                {timerRunning? formatTime(timeRemaining) : formatTime(currentSession) }
             </div>
             <div className="controls">
                 <i
@@ -93,130 +226,4 @@ const Display = (props) => {
     )
 }
 
-
-
-const mapStateToProps = (state) => {
-    return { 
-        state: state.state
-    }
-}
-
-export default connect(
-    mapStateToProps,
-    {
-        updateDisplay,
-        start,
-        pause,
-        reset
-    }
-)(Display);
-
-
-
-/*
-class Display extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            timerRunning: false,
-            timeRemaining: 0,
-            elapsed: 0,
-            currentSession : this.props.state.session? this.props.state.sessionLength: this.props.state.breakLength
-        }
-    }
-
-    handleClick = (event) => {
-        const id = event.target.id;
-        // TODO : destructure the variables used
-        const { timerRunning } = this.state;
-        const { pause, start, reset } = this.props;
-
-        // get current time left
-        if (timerRunning) {
-            // if the timer is already running and someone hits start
-            // nothing happens, the timer continues
-
-            // if the timer is already running and someone hits pause
-            // the timer stops
-            if (id === "pause") {
-                pause(Date.now());
-                this.setState({
-                    timerRunning: false
-                })
-            }
-            
-        }
-        else {
-            // if the timer is not running and someone hits start,
-            // the timer starts
-            if (id === "start") {
-                start(Date.now());
-                this.setState({
-                    timerRunning: true,
-                    timeRemaining: this.state.currentSession - this.state.elapsed
-                }, () => this.runTimer())
-            }
-            // if the timer is not running and someone hits pause, nothing happens
-            // reset resets the timer ONLY if timer is not running
-            else if (id === "reset") {
-                reset();
-                this.setState({
-                    timerRunning: false,
-                    elapsed: 0,
-                    timeRemaining: 0
-                })
-            }
-        }
-    }
-
-    runTimer = () => {
-        const { timerRunning, timeRemaining, elapsed } = this.state;
-        const { startTime } = this.props.state;
-        console.log('run timer');
-        while (timerRunning && timeRemaining > 0) {
-            this.interval = setInterval(() => {
-                console.log("one second");
-                // update time remaining every second
-                let currentElapsed = (Date.now() - startTime) + elapsed;
-                this.setState({
-                    elapsed: currentElapsed,
-                    timeRemaining: this.state.timeRemaining - elapsed
-                })
-                
-            }, 1000)
-        }
-    }
-
-    render() {
-        const {timerRunning, timeRemaining } = this.state;
-
-        return (
-            <div className="display-container">
-                <h3 className="ui header">
-                    Session
-                </h3>
-                <div className="display">
-                    {timerRunning? formatTime(timeRemaining) : formatTime(this.state.currentSession) }
-                </div>
-                <div className="controls">
-                    <i
-                        id="start"
-                        className="big play circle outline icon"
-                        onClick={this.handleClick}
-                    ></i>
-                    <i
-                        id="pause"
-                        className="big pause circle outline icon"
-                        onClick={this.handleClick}
-                    ></i>
-                    <i
-                        id="reset"
-                        className="big redo icon"
-                        onClick={this.handleClick}
-                    ></i>
-                </div>
-            </div>
-        )
-    }
-}
 */

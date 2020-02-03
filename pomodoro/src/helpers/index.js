@@ -2,14 +2,16 @@ const leadingZero = (num) => {
     if (num < 10 && num >=0 ) {
         return `0${num}`;
     }
-    return num;
+    return `${num}`;
 }
 
 export const formatTime = (milliseconds) => {
     // from milliseconds to
     // min:ss
-    let seconds = (leadingZero((milliseconds/1000)%60));
-    let minutes = (milliseconds/(1000*60)%60);
+    let seconds = leadingZero(Math.floor((milliseconds/1000)%60));
+    console.log(seconds);
+    let minutes = Math.floor(milliseconds/(1000*60)%60);
+    console.log(minutes);
     
     return `${minutes}:${seconds}`;
 }
