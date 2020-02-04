@@ -23,8 +23,8 @@ const SessionList = ({ breakLength, sessionLength, updateBreak, updateWork }) =>
 
 const mapStateToProps = (state) => {
     return {
-        breakLength: state.state.breakLength,
-        sessionLength: state.state.sessionLength
+        breakLength: state.breakLength,
+        sessionLength: state.sessionLength
     }
 }
 

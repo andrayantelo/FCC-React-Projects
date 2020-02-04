@@ -1,10 +1,12 @@
 import React from 'react';
+import { timeToMs } from '../helpers';
 
 const Session = ({ title, handler, display }) => {
 
     const handleClick = (event) => {
         const change = event.target.id;
-        handler(display, change);
+        const sessionLength = timeToMs(display);
+        handler(sessionLength, change);
     }
 
     return (

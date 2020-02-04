@@ -5,32 +5,34 @@ import {
         START,
         PAUSE,
         RESET,
-        UPDATE_DISPLAY
+        UPDATE_DISPLAY,
+        STOP
      } from './types';
 
-export const updateBreak = (num, change) => {
+export const updateBreak = (length, change) => {
     return {
         type: UPDATE_BREAK,
         payload : {
-            num,
+            length,
             change
         }
     }
 }
 
-export const updateWork = (num, change) => {
+export const updateWork = (length, change) => {
     return {
         type: UPDATE_WORK,
         payload : {
-            num,
+            length,
             change
         }
     }
 }
 
-export const updateSession = () => {
+export const updateSession = (length) => {
     return {
-        type: UPDATE_SESSION
+        type: UPDATE_SESSION,
+        payload: length
     }
 }
 
@@ -41,21 +43,29 @@ export const start = (startTime) => {
     }
 }
 
-export const pause = (stopTime) => {
+export const pause = (pauseTime) => {
     return {
         type: PAUSE,
-        payload: stopTime
+        payload: pauseTime
     }
 }
 
-export const reset = () => {
+export const reset = (sessionLength) => {
     return {
-        type: RESET
+        type: RESET,
+        payload: sessionLength
     }
 }
 
-export const updateDisplay = () => {
+export const updateDisplay = (display) => {
     return {
-        type: UPDATE_DISPLAY
+        type: UPDATE_DISPLAY,
+        payload: display
+    }
+}
+
+export const stop = () => {
+    return {
+        type: STOP
     }
 }

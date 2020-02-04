@@ -1,9 +1,9 @@
 import { UPDATE_SESSION } from '../actions/types';
 
-export default (session=true, action) => {
+export default (session=5*1000, action) => {
     switch(action.type) {
         case UPDATE_SESSION:
-            return !session;
+            return action.payload;
         default:
             return session;
     }

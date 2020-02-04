@@ -1,19 +1,16 @@
 import { UPDATE_WORK } from '../actions/types';
 
-export default (length=25, action) => {
+export default (length=25*60000, action) => {
     switch(action.type) {
         case UPDATE_WORK:
             if (action.payload.change === "up") {
-                console.log('increment');
-                return length + 1;
+                return action.payload.length + 60000;
             }
-            else if (action.payload.change === "down" && length !== 1) {
-                console.log('decrement');
-                return length - 1;
+            else if (action.payload.change === "down" && length !== 60000) {
+                return action.payload.length - 60000;
             }
             else {
-                console.log('neither');
-                return length;
+                return action.payload.length;
             }
         default:
             return length;

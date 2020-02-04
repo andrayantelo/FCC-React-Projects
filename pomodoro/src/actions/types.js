@@ -5,3 +5,4 @@ export const START = 'START';
 export const PAUSE = 'PAUSE';
 export const RESET = 'RESET';
 export const UPDATE_DISPLAY = 'UPDATE_DISPLAY';
+export const STOP = 'STOP';
