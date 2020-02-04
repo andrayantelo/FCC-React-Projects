@@ -6,27 +6,28 @@ const Timer = () => {
     
 
     const [ timer, setTimer ] = useState({
-        current: 25*60000,
+        initial: 25*60000,
         remaining: 25*60000,
         elapsed: 0,
         startTime: 0,
         stopTime: 0
     })
 
-    const [ display, setDisplay ] = useState(timer.remaining);
+   // const [ display, setDisplay ] = useState(timer.remaining);
 
-    const startTimer = () => {
+    const toggleTimer = () => {
         setRunning(!running);
         setTimer({ ...timer, startTime: Date.now() })
     }
 
 
     useEffect(() => {
+        console.log("test")
         let interval = null;
         if (running) {
             interval = setInterval(() => {
-                let elapsed = (Date.now() - timer.startTime) + timer.elapsed;
-                let remaining = timer.current - elapsed;
+                let elapsed = (Date.now() - timer.startTime);
+                let remaining = timer.initial - elapsed;
                 setTimer(timer => {
                             
                     return {...timer, elapsed, remaining}
@@ -34,7 +35,7 @@ const Timer = () => {
             }, 1000);
         }
         return () => clearInterval(interval);
-    }, [running])
+    }, [running, timer])
 
     useEffect(() => {
         console.log(timer);
@@ -44,7 +45,7 @@ const Timer = () => {
         <div>
             {timer.remaining}
             <button
-                onClick={startTimer}
+                onClick={toggleTimer}
             >
                 On/Off
             </button>
