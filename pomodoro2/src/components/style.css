@@ -1,0 +1,77 @@
+#root {
+    height: 100%;
+}
+
+.container {
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.outer-row {
+    margin: 20px 0px 20px 0px;
+    padding: 20px 0px 20px 0px;
+}
+
+.inner-container {
+    width: 100%;
+}
+
+.ui.header {
+    text-align: center;
+}
+
+.sessions-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.session {
+    padding: 0px 40px 0px 40px;
+    margin: 0px 20px 0px 20px;
+}
+
+.session-display-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.session-item {
+    flex-grow: 1;
+    margin: 0px 15px 0px 15px;
+}
+
+.session-display {
+    text-align: center;
+    font-size: 2em;
+}
+
+i {
+    cursor: pointer;
+}
+
+.display-container {
+    text-align: center;
+}
+
+.display {
+    font-size: 2em;
+}
+
+.controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.controls i {
+    margin: 10px 0px 10px 0px;
+    padding: 10px 0px 10px 0px;
+}
