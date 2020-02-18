@@ -1,9 +1,11 @@
 #root {
     height: 100%;
+    background-color:#fbf4e1;
+    font-family: Roboto Arial;
 }
 
-body {
-    
+.ui.header {
+    color: #9b111e;
 }
 
 .container {
@@ -22,7 +24,7 @@ body {
 }
 
 .inner-container {
-    width: 100%;
+    width: 80%;
 }
 
 .ui.header {
@@ -63,12 +65,24 @@ i {
 
 .display-container {
     text-align: center;
+    background-color: black;
+    padding: 20px 5px;
+}
+
+.outer-display-container {
     margin: 0 auto;
-    width: 50%;
+    width: 30%;
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: 5px 10px #9b111e;
 }
 
 .display {
     font-size: 2em;
+}
+
+.critical {
+    color: #9b111e;
 }
 
 .controls {

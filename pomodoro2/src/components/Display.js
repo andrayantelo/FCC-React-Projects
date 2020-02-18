@@ -13,7 +13,7 @@ state {
 */
 
 class Display extends Component {
-    componentDidMount () {
+    componentDidMount() {
         this.props.startTimer();
     }
 
@@ -22,16 +22,21 @@ class Display extends Component {
     }
 
     render() {
-        console.log(this.state);
+        let displayClass = 'display';
+        if (this.props.display <= 60000 && this.props.display > 0) {
+            displayClass += ' critical';
+        }
         return(
-            <div className="display-container">
-                <h3 className="ui header">
-                    Session
-                </h3>
-                <div className="display">
-                    {formatTime(this.props.display)}
+            <div className="outer-display-container">
+                <div className="display-container">
+                    <h3 className="ui header">
+                        Session
+                    </h3>
+                    <div className={displayClass}>
+                        {formatTime(this.props.display)}
+                    </div>
+                    <Controls handleClick={this.props.handleClick} />
                 </div>
-                <Controls handleClick={this.props.handleClick} />
             </div>
         )
     }

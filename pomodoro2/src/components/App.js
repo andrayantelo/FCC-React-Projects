@@ -9,13 +9,13 @@ class App extends Component {
         this.state = {
             timerLengths: {
                 breakLength: 3*1000,
-                workLength: 5*1000
+                workLength: 120*1000
             },
             startTime: 0,
             pauseTime: 0,
             timerRunning: false,
-            currentSession: 5*1000,
-            display: 5*1000
+            currentSession: "workLength",
+            display: 120*1000
         }
     }
 
@@ -26,7 +26,6 @@ class App extends Component {
         const toUpdate = session === "Break" ? "breakLength" : "workLength";
         this.setState((prevState) => {
             if (toUpdate === "workLength") {
-                console.log('update display as well');
                 return {
                         ...prevState,
                         display: prevState.timerLengths[toUpdate] + 60000,
@@ -91,14 +90,13 @@ class App extends Component {
                     } 
                 }, () => {
                     console.log(this.state)
-                })
+                })  
             }
         }
         else {
             // if the timer is not running and someone hits start,
             // the timer starts
             if (action === "start") {
-                console.log("start");
                 // update timerRunning and startTime
                 this.setState((prevState) => {
                     return {
@@ -111,7 +109,6 @@ class App extends Component {
             // if the timer is not running and someone hits pause, nothing happens
             // reset resets the timer ONLY if timer is not running
             else if (action === "reset") {
-                console.log("reset");
                 // update startTime, pauseTime, display, and maybe some others
                 this.setState((prevState) => {
                     return {
@@ -119,60 +116,54 @@ class App extends Component {
                         timerRunning: false,
                         startTime: 0,
                         pauseTime: 0,
-                        display: prevState.currentSession
+                        display: prevState.timerLengths[prevState.currentSession]
                     }
                 })
             }
         }
     }
 
-    playSound = () => {
-        
-    }
-
     startTimer = () => {
-        console.log('setting interval');
-        this.interval = setInterval(() => {
-            if (this.state.timerRunning) {
+            this.interval = setInterval(() => { 
                 //update timeRemaining to
-                let newDisplay = this.state.currentSession - (Date.now() - this.state.startTime);
-                this.setState((prevState) => {
-                    return {
-                        ...prevState,
-                        display: newDisplay
-                    }   
-                })
-            }
-        }, 1000);
+                if (this.state.timerRunning) {
+                    let newDisplay = this.state.timerLengths[this.state.currentSession] - (Date.now() - this.state.startTime);
+                    this.setState((prevState) => {
+                        return {
+                            ...prevState,
+                            display: newDisplay
+                        }   
+                    })
+                }  
+            }, 1000);
     }
 
     stopTimer = () => {
-        console.log('stopTimer running');
         if (this.state.display < 0) {
             // switch timer to other session
             // hard code for now TODO - change this
             this.setState((prevState) => {
                 return {
                     ...prevState,
-                    currentSession: 3*1000,
+                    currentSession: prevState === "workLength"? "breakLength": "workLength",
                     display: 3*1000,
-                    startTime: Date.now()
+                    stopTime: Date.now()
                 }
             })
         }
         else if (!this.state.timerRunning) {
-            console.log('clearing interval');
             clearInterval(this.interval);
         }
     }
 
     render() {
+        console.log('rerendering App');
         console.log(this.state);
         return (
             <div className="container">
                 <div className="inner-container ui teal inverted segment">
                     <div className="outer-row">
-                        <h1 className="ui centered header">Pomodoro</h1>
+                        <h1 className="ui centered huge header">Pomodoro</h1>
                     </div>
                     <div className="outer-row">
                         <SessionList

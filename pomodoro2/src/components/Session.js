@@ -4,7 +4,7 @@ import { formatTime } from '../helpers';
 const Session = (props) => {
     return (
         <div className="session">
-            <h4 className="ui header">{ props.title } Length</h4>
+            <h4 className="ui large header">{ props.title } Length</h4>
             <div className="session-display-container">
                 <i
                     id="up"
