@@ -132,8 +132,7 @@ class App extends Component {
                 return {
                     ...prevState,
                     currentSession: prevState === "workLength"? "breakLength": "workLength",
-                    display: 3*1000,
-                    stopTime: Date.now()
+                    display: 3*1000
                 }
             })
         }
