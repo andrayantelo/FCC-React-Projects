@@ -170,7 +170,7 @@ class App extends Component {
         console.log(this.state);
         return (
             <div className="container">
-                <div className="inner-container">
+                <div className="inner-container ui teal inverted segment">
                     <div className="outer-row">
                         <h1 className="ui centered header">Pomodoro</h1>
                     </div>
