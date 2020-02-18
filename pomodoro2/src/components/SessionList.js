@@ -2,7 +2,7 @@ import React from 'react';
 import Session from './Session';
 
 const SessionList = (props) => {
-    const { timerLengths: {breakLength, workLength}, incrementLength, decrementLength } = props;
+    const { breakLength, workLength, incrementLength, decrementLength } = props;
     return (
         <div className="sessions-container">
             <Session

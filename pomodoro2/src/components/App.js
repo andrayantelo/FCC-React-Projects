@@ -7,10 +7,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            timerLengths: {
-                breakLength: 3*1000,
-                workLength: 120*1000
-            },
+            breakLength: 3*1000,
+            workLength: 120*1000,
             startTime: 0,
             pauseTime: 0,
             timerRunning: false,
@@ -28,19 +26,13 @@ class App extends Component {
             if (toUpdate === "workLength") {
                 return {
                         ...prevState,
-                        display: prevState.timerLengths[toUpdate] + 60000,
-                    timerLengths: {
-                        ...prevState.timerLengths,
-                        [toUpdate]: prevState.timerLengths[toUpdate] + 60000
-                    }
+                        display: prevState[toUpdate] + 60000,
+                        [toUpdate]: prevState[toUpdate] + 60000
                 }
             }
             return {
                 ...prevState,
-                timerLengths: {
-                    ...prevState.timerLengths,
-                    [toUpdate]: prevState.timerLengths[toUpdate] + 60000
-                }
+                [toUpdate]: prevState[toUpdate] + 60000
             }
         }, () => console.log(this.state))
     }
@@ -48,25 +40,19 @@ class App extends Component {
     decrementLength = (session) => {
         const toUpdate = session === "Break" ? "breakLength" : "workLength";
         this.setState((prevState) => {
-            if (prevState.timerLengths[toUpdate] <= 60000) {
+            if (prevState[toUpdate] <= 60000) {
                 return prevState;
             }
             else if (toUpdate === "workLength") {
                 return {
                         ...prevState,
-                        display: prevState.timerLengths[toUpdate] - 60000,
-                    timerLengths: {
-                        ...prevState.timerLengths,
-                        [toUpdate]: prevState.timerLengths[toUpdate] - 60000
-                    }
+                        display: prevState[toUpdate] - 60000,
+                        [toUpdate]: prevState[toUpdate] - 60000
                 }
             }
             return {
                 ...prevState,
-                timerLengths: {
-                    ...prevState.timerLengths,
-                    [toUpdate]: prevState.timerLengths[toUpdate] - 60000
-                }
+                [toUpdate]: prevState[toUpdate] - 60000
             }
         })
     }
@@ -116,7 +102,7 @@ class App extends Component {
                         timerRunning: false,
                         startTime: 0,
                         pauseTime: 0,
-                        display: prevState.timerLengths[prevState.currentSession]
+                        display: prevState[prevState.currentSession]
                     }
                 })
             }
@@ -127,7 +113,7 @@ class App extends Component {
             this.interval = setInterval(() => { 
                 //update timeRemaining to
                 if (this.state.timerRunning) {
-                    let newDisplay = this.state.timerLengths[this.state.currentSession] - (Date.now() - this.state.startTime);
+                    let newDisplay = this.state[this.state.currentSession] - (Date.now() - this.state.startTime);
                     this.setState((prevState) => {
                         return {
                             ...prevState,
@@ -167,7 +153,8 @@ class App extends Component {
                     </div>
                     <div className="outer-row">
                         <SessionList
-                            timerLengths={this.state.timerLengths}
+                            breakLength={this.state.breakLength}
+                            workLength={this.state.workLength}
                             incrementLength={this.incrementLength}
                             decrementLength={this.decrementLength}
                             handler={this.updateLength}
