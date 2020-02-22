@@ -9,15 +9,15 @@ const Session = (props) => {
                 <i
                     id="up"
                     className="session-item big arrow alternate circle up outline icon"
-                    onClick={() => props.incrementLength(props.title) }
+                    onClick={() => console.log("increment") }
                 ></i>
                 <div className="session-item session-display">
-                    {formatTime(props.sessionLength)}
+                    {formatTime(5*60000)}
                 </div>
                 <i
                     id="down"
                     className="session-item big arrow alternate circle down outline icon"
-                    onClick={() => props.decrementLength(props.title) }
+                    onClick={() => console.log("decrement") }
                 ></i>
             </div>
         </div>
