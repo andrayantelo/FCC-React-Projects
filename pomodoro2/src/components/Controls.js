@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { startTimer, pauseTimer, resetTimer } from '../actions';
+import { formatTime } from '../helpers';
 
 class Controls extends Component {
     constructor(props)  {
@@ -10,7 +11,8 @@ class Controls extends Component {
     handleClick = (event) => {
         const actionType = event.target.id;
         console.log("actionType: ", actionType);
-        const { timerRunning } = this.props;
+        const { timerRunning } = this.props.timer;
+        const { startTimer, pauseTimer } = this.props;
         console.log("is timer running? ", timerRunning);
         /*
         when you click start, the timer
@@ -18,19 +20,19 @@ class Controls extends Component {
         (if the timer isn't already running)
         */
         if (!timerRunning) {
-            console.log('timer is not running');
+            console.log("starting timer");
             startTimer();
-            /*if (actionType === "start") {
+            if (actionType === "start") {
                 this.timer = setInterval(() => {
-                    console.log("one second passed");
+                    console.log(formatTime(this.props.timer.workLength - (Date.now() - this.props.timer.startTime)))
                 }, 1000)
-            }*/
+            }
         }
         else {
             if (actionType === "pause") {
                 console.log("pausing timer");
                 pauseTimer();
-                //clearInterval(this.timer);
+                clearInterval(this.timer);
             }
         }
     }
@@ -58,7 +60,7 @@ class Controls extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return { timerRunning: state.timer.timerRunning }
+    return { timer: state.timer }
 }
 
 export default connect(
