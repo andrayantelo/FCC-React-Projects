@@ -6,16 +6,17 @@ import {
     UPDATE_DISPLAY
 } from './types';
 
-export const startTimer = (startTime) => {
+export const startTimer = () => {
     return {
         type: START,
-        payload: startTime
+        payload: Date.now()
     }
 }
 
 export const pauseTimer = () => {
     return {
-        type: PAUSE
+        type: PAUSE,
+        payload: Date.now()
     }
 }
 

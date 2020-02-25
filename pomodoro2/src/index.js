@@ -19,9 +19,8 @@ const preloadedState = {
         breakLength: 3*1000,
         workLength: 120*1000,
         startTime: 0,
-        timerRunning: false,
-        currentSession: "workLength",
-        display: 120*1000
+        pauseTime: 0,
+        timerRunning: false
     }
 }
 
