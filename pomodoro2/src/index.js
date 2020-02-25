@@ -20,7 +20,8 @@ const preloadedState = {
         workLength: 120*1000,
         startTime: 0,
         pauseTime: 0,
-        timerRunning: false
+        timerRunning: false,
+        displayTime: 0
     }
 }
 

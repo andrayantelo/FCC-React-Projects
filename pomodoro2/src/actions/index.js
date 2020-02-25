@@ -2,6 +2,7 @@ import {
     START,
     PAUSE,
     RESET,
+    TICK,
     CHANGE_SESSION,
     UPDATE_DISPLAY
 } from './types';
@@ -9,6 +10,13 @@ import {
 export const startTimer = () => {
     return {
         type: START,
+        payload: Date.now()
+    }
+}
+
+export const tick = () => {
+    return {
+        type: TICK,
         payload: Date.now()
     }
 }

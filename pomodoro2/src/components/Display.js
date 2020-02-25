@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Controls from './Controls';
 import { formatTime } from '../helpers';
 
-const Display = () => {
+const Display = (props) => {
     return(
         <div className="outer-display-container">
             <div className="display-container">
@@ -11,7 +11,7 @@ const Display = () => {
                     Session
                 </h3>
                 <div className="display">
-                    {formatTime(5*60000)}
+                    {formatTime(props.timer.displayTime)}
                 </div>
                 <Controls />
             </div>
@@ -19,5 +19,11 @@ const Display = () => {
     )
 }
 
+const mapStateToProps = (state) => {
+    return { timer: state.timer }
+}
 
-export default connect()(Display);
+
+export default connect(
+    mapStateToProps
+)(Display);

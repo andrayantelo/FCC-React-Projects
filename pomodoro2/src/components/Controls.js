@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { startTimer, pauseTimer, resetTimer } from '../actions';
-import { formatTime } from '../helpers';
+import { startTimer, pauseTimer, resetTimer, tick } from '../actions';
 
 class Controls extends Component {
     constructor(props)  {
@@ -10,27 +9,23 @@ class Controls extends Component {
     }
     handleClick = (event) => {
         const actionType = event.target.id;
-        console.log("actionType: ", actionType);
         const { timerRunning } = this.props.timer;
-        const { startTimer, pauseTimer } = this.props;
-        console.log("is timer running? ", timerRunning);
+        const { startTimer, pauseTimer, tick } = this.props;
         /*
         when you click start, the timer
         starts, so you need to do setInterval
         (if the timer isn't already running)
         */
         if (!timerRunning) {
-            console.log("starting timer");
             startTimer();
             if (actionType === "start") {
                 this.timer = setInterval(() => {
-                    console.log(formatTime(this.props.timer.workLength - (Date.now() - this.props.timer.startTime)))
+                    tick();
                 }, 1000)
             }
         }
         else {
             if (actionType === "pause") {
-                console.log("pausing timer");
                 pauseTimer();
                 clearInterval(this.timer);
             }
@@ -68,6 +63,7 @@ export default connect(
     {
         startTimer,
         pauseTimer,
-        resetTimer
+        resetTimer,
+        tick
     }
 )(Controls);
