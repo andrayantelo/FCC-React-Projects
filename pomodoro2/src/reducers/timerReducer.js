@@ -3,8 +3,7 @@ import {
     PAUSE,
     RESET,
     TICK,
-    CHANGE_SESSION,
-    UPDATE_DISPLAY
+    CHANGE_SESSION
 } from '../actions/types';
 
 /*
@@ -29,7 +28,7 @@ export default (prevState = {}, action) => {
         case TICK:
             return {
                 ...prevState,
-                displayTime: prevState.workLength - (action.payload - prevState.startTime)
+                displayTime: prevState.displayTime - (1000)
             }
         case PAUSE:
             return {
@@ -44,7 +43,6 @@ export default (prevState = {}, action) => {
                 startTime: 0
             }
         case CHANGE_SESSION:
-        case UPDATE_DISPLAY:
         default:
             return prevState;
     }

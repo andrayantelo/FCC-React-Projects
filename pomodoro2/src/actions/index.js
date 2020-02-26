@@ -3,7 +3,8 @@ import {
     PAUSE,
     RESET,
     TICK,
-    CHANGE_SESSION,
+    UPDATE_WORK,
+    UPDATE_BREAK,
     UPDATE_DISPLAY
 } from './types';
 
@@ -34,16 +35,9 @@ export const resetTimer = () => {
     }
 }
 
-export const changeSession = (session) => {
+export const updateWork = (work, type) => {
     return {
-        type: CHANGE_SESSION,
-        payload: session
-    }
-}
-
-export const updateDisplay = (display) => {
-    return {
-        type: UPDATE_DISPLAY,
-        payload: display
+        type: UPDATE_WORK,
+        payload: work
     }
 }

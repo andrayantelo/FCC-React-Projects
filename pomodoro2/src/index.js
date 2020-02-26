@@ -21,7 +21,7 @@ const preloadedState = {
         startTime: 0,
         pauseTime: 0,
         timerRunning: false,
-        displayTime: 0
+        displayTime: 120*1000
     }
 }
 
