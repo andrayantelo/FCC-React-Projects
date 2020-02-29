@@ -1,43 +1,41 @@
 import {
-    START,
-    PAUSE,
-    RESET,
-    TICK,
-    UPDATE_WORK,
-    UPDATE_BREAK,
-    UPDATE_DISPLAY
+    TIMER_STARTED,
+    TIMER_PAUSED,
+    TIMER_RESET,
+    TICKED,
+    WORK_UPDATED
 } from './types';
 
 export const startTimer = () => {
     return {
-        type: START,
+        type: TIMER_STARTED,
         payload: Date.now()
     }
 }
 
 export const tick = () => {
     return {
-        type: TICK,
+        type: TICKED,
         payload: Date.now()
     }
 }
 
 export const pauseTimer = () => {
     return {
-        type: PAUSE,
+        type: TIMER_PAUSED,
         payload: Date.now()
     }
 }
 
 export const resetTimer = () => {
     return {
-        type: RESET
+        type: TIMER_RESET
     }
 }
 
 export const updateWork = (work, type) => {
     return {
-        type: UPDATE_WORK,
+        type: WORK_UPDATED,
         payload: work
     }
 }

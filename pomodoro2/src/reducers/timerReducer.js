@@ -1,9 +1,9 @@
 import {
-    START,
-    PAUSE,
-    RESET,
-    TICK,
-    CHANGE_SESSION
+    TIMER_STARTED,
+    TIMER_PAUSED,
+    TIMER_RESET,
+    TICKED,
+    SESSION_CHANGED
 } from '../actions/types';
 
 /*
@@ -19,30 +19,30 @@ const preloadedState = {
 
 export default (prevState = {}, action) => {
     switch(action.type) {
-        case START:
+        case TIMER_STARTED:
             return {
                 ...prevState,
                 timerRunning: true,
                 startTime: action.payload
             }
-        case TICK:
+        case TICKED:
             return {
                 ...prevState,
                 displayTime: prevState.displayTime - (1000)
             }
-        case PAUSE:
+        case TIMER_PAUSED:
             return {
                 ...prevState,
                 timerRunning: false,
                 pauseTime: action.payload
             }
-        case RESET:
+        case TIMER_RESET:
             return {
                 ...prevState,
                 pauseTime: 0,
                 startTime: 0
             }
-        case CHANGE_SESSION:
+        case SESSION_CHANGED:
         default:
             return prevState;
     }

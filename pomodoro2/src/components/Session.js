@@ -1,5 +1,5 @@
 import React from 'react';
-import { updateWork } from '../actions';
+//import { updateWork } from '../actions';
 import { formatTime } from '../helpers';
 
 const Session = (props) => {

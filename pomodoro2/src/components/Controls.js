@@ -9,7 +9,7 @@ class Controls extends Component {
     }
     handleClick = (event) => {
         const actionType = event.target.id;
-        const { timerRunning } = this.props.timer;
+        const { timerRunning, displayTime } = this.props.timer;
         const { startTimer, pauseTimer, tick } = this.props;
         /*
         when you click start, the timer
@@ -17,10 +17,17 @@ class Controls extends Component {
         (if the timer isn't already running)
         */
         if (!timerRunning) {
-            startTimer();
             if (actionType === "start") {
+                startTimer();
                 this.timer = setInterval(() => {
-                    tick();
+                    console.log("displayTime: ", displayTime);
+                    if (displayTime > 0) {
+                        tick();
+                    }
+                    else {
+                        console.log("STOP THE TIMER");
+                    }
+                    
                 }, 1000)
             }
         }

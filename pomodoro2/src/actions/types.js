@@ -7,10 +7,10 @@ action types:
     updateDisplay?
 */
 
-export const START = 'START';
-export const PAUSE = 'PAUSE';
-export const RESET = 'RESET';
-export const TICK = 'TICK';
-export const UPDATE_WORK = 'UPDATE_WORK';
-export const UPDATE_BREAK = 'UPDATE_BREAK';
-export const CHANGE_SESSION = 'CHANGE_SESSION';
+export const TIMER_STARTED = 'TIMER_STARTED';
+export const TIMER_PAUSED = 'TIMER_PAUSED';
+export const TIMER_RESET = 'TIMER_RESET';
+export const TICKED = 'TICKED';
+export const WORK_UPDATED = 'WORD_UPDATED';
+export const BREAK_UPDATED = 'BREAK_UPDATED';
+export const SESSION_CHANGED = 'SESSION_CHANGED';
