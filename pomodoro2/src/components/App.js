@@ -1,9 +1,11 @@
 import React from 'react';
 import SessionList from './SessionList';
 import Display from './Display';
+
 import './style.css';
 
 const App = () => {
+   
     return (
         <div className="container">
             <div className="inner-container ui teal inverted segment">

@@ -1,64 +1,61 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { startTimer, pauseTimer, resetTimer, tick } from '../actions';
+import { startTimer, pauseTimer, resetTimer, tick, switchSessions } from '../actions';
 
-class Controls extends Component {
-    constructor(props)  {
-        super(props);
-        this.timer = null;
-    }
-    handleClick = (event) => {
+const Controls = (props) => {
+    const { timerRunning,
+            displayTime } = props.timer;
+    const { startTimer,
+            pauseTimer,
+            resetTimer,
+            tick,
+            switchSessions } = props;
+
+    const handleClick = (event) => {
         const actionType = event.target.id;
-        const { timerRunning, displayTime } = this.props.timer;
-        const { startTimer, pauseTimer, tick } = this.props;
-        /*
-        when you click start, the timer
-        starts, so you need to do setInterval
-        (if the timer isn't already running)
-        */
-        if (!timerRunning) {
-            if (actionType === "start") {
-                startTimer();
-                this.timer = setInterval(() => {
-                    console.log("displayTime: ", displayTime);
-                    if (displayTime > 0) {
-                        tick();
-                    }
-                    else {
-                        console.log("STOP THE TIMER");
-                    }
-                    
-                }, 1000)
-            }
+        if (actionType === "start") {
+            startTimer();
         }
-        else {
-            if (actionType === "pause") {
-                pauseTimer();
-                clearInterval(this.timer);
-            }
+        else if (actionType === "pause") {
+            pauseTimer();
+        }
+        else if (actionType === "reset") {
+            resetTimer();
         }
     }
-    render() {
-        return (
-            <div className="controls">
-                <i
-                    id="start"
-                    className="big play circle outline icon"
-                    onClick={this.handleClick}
-                ></i>
-                <i
-                    id="pause"
-                    className="big pause circle outline icon"
-                    onClick={this.handleClick}
-                ></i>
-                <i
-                    id="reset"
-                    className="big redo icon"
-                    onClick={this.handleClick}
-                ></i>
-            </div>
-        )
-    }
+
+    useEffect(() => {
+        let timer;
+        if (timerRunning && displayTime >= 0) {
+            timer = setInterval(() => {
+                tick();
+            }, 1000)
+        }
+        else if (displayTime < 0) {
+            switchSessions();
+        }
+        return () => clearInterval(timer);
+    }, [timerRunning, displayTime]);
+
+    return (
+        <div className="controls">
+            <i
+                id="start"
+                className="big play circle outline icon"
+                onClick={handleClick}
+            ></i>
+            <i
+                id="pause"
+                className="big pause circle outline icon"
+                onClick={handleClick}
+            ></i>
+            <i
+                id="reset"
+                className="big redo icon"
+                onClick={handleClick}
+            ></i>
+        </div>
+    )
 }
 
 const mapStateToProps = (state) => {
@@ -71,6 +68,7 @@ export default connect(
         startTimer,
         pauseTimer,
         resetTimer,
-        tick
+        tick,
+        switchSessions
     }
 )(Controls);

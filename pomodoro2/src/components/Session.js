@@ -13,7 +13,7 @@ const Session = (props) => {
                     onClick={() => console.log("increment") }
                 ></i>
                 <div className="session-item session-display">
-                    {formatTime(5*60000)}
+                    {formatTime(props.sessionLength)}
                 </div>
                 <i
                     id="decrement"
