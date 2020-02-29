@@ -3,7 +3,9 @@ import {
     TIMER_PAUSED,
     TIMER_RESET,
     TICKED,
-    SESSION_ENDED
+    SESSION_ENDED,
+    WORK_UPDATED,
+    BREAK_UPDATED
 } from '../actions/types';
 
 /*
@@ -13,7 +15,7 @@ const preloadedState = {
         startTime: 0,
         timerRunning: false,
         displayTime: 0,
-        currentSession: 5*1000
+        currentSession: workLength
 }
 */
 
@@ -41,7 +43,7 @@ export default (prevState = {}, action) => {
                 ...prevState,
                 pauseTime: 0,
                 startTime: 0,
-                displayTime: prevState.currentSession,
+                displayTime: prevState["workLength"],
                 timerRunning: false
             }
         case SESSION_ENDED:
@@ -52,6 +54,54 @@ export default (prevState = {}, action) => {
                 displayTime: prevState[newSession] 
 
             }
+        case WORK_UPDATED:
+            if (action.payload === "work-increment") {
+                const newWorkLength = prevState.workLength + 60000;
+                if (newWorkLength > 3600000) {
+                    return prevState
+                }
+                return {
+                    ...prevState,
+                    workLength: newWorkLength,
+                    displayTime: newWorkLength
+                }
+            }
+            else {
+                const newWorkLength = prevState.workLength - 60000;
+                if (newWorkLength < 0) {
+                    return prevState
+                }
+                else {
+                    return {
+                        ...prevState,
+                        workLength: newWorkLength,
+                        displayTime: newWorkLength
+                    }
+                }
+            }
+        case BREAK_UPDATED:
+                if (action.payload === "break-increment") {
+                    const newBreakLength = prevState.breakLength + 60000;
+                    if (newBreakLength > 3600000) {
+                        return prevState
+                    }
+                    return {
+                        ...prevState,
+                        breakLength: newBreakLength
+                    }
+                }
+                else {
+                    const newBreakLength = prevState.breakLength - 60000;
+                    if (newBreakLength < 0) {
+                        return prevState
+                    }
+                    else {
+                        return {
+                            ...prevState,
+                            breakLength: newBreakLength
+                        }
+                    }
+                }
         default:
             return prevState;
     }

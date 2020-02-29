@@ -3,7 +3,9 @@ import {
     TIMER_PAUSED,
     TIMER_RESET,
     TICKED,
-    SESSION_ENDED
+    SESSION_ENDED,
+    BREAK_UPDATED,
+    WORK_UPDATED
 } from './types';
 
 export const startTimer = () => {
@@ -36,5 +38,19 @@ export const resetTimer = () => {
 export const switchSessions = () => {
     return {
         type: SESSION_ENDED
+    }
+}
+
+export const updateWork = (type) => {
+    return {
+        type: WORK_UPDATED,
+        payload: type
+    }
+}
+
+export const updateBreak = (type) => {
+    return {
+        type: BREAK_UPDATED,
+        payload: type
     }
 }

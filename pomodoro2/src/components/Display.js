@@ -7,10 +7,14 @@ const Display = (props) => {
     return(
         <div className="outer-display-container">
             <div className="display-container">
-                <h3 className="ui header">
-                    Session
+                <h3
+                    id="timer-label"
+                    className="ui header">
+                    {props.timer.currentSession === "workLength"? "Session" : "Break"}
                 </h3>
-                <div className="display">
+                <div 
+                    id="time-left"
+                    className="display">
                     {formatTime(props.timer.displayTime)}
                 </div>
                 <Controls />

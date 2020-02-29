@@ -13,8 +13,13 @@ const Controls = (props) => {
 
     const handleClick = (event) => {
         const actionType = event.target.id;
-        if (actionType === "start") {
-            startTimer();
+        if (actionType === "start_stop") {
+            if (timerRunning) {
+                pauseTimer();
+            }
+            else {
+                startTimer();
+            }
         }
         else if (actionType === "pause") {
             pauseTimer();
@@ -35,26 +40,37 @@ const Controls = (props) => {
             switchSessions();
         }
         return () => clearInterval(timer);
-    }, [timerRunning, displayTime]);
+    }, [timerRunning, displayTime, tick, switchSessions]);
 
     return (
-        <div className="controls">
-            <i
-                id="start"
-                className="big play circle outline icon"
-                onClick={handleClick}
-            ></i>
-            <i
-                id="pause"
-                className="big pause circle outline icon"
-                onClick={handleClick}
-            ></i>
-            <i
-                id="reset"
-                className="big redo icon"
-                onClick={handleClick}
-            ></i>
+        <div>
+            <div className="controls">
+                <i
+                    id="start_stop"
+                    className="big play circle outline icon"
+                    onClick={handleClick}
+                ></i>
+                <i
+                    id="pause"
+                    className="big pause circle outline icon"
+                    onClick={handleClick}
+                ></i>
+                <i
+                    id="reset"
+                    className="big redo icon"
+                    onClick={handleClick}
+                ></i>
+            </div>
+            <div>
+                <audio
+                    id="beep"
+                    preload="auto" 
+                    src="https://goo.gl/65cBl1"
+                    //ref={(audio) => { this.audioBeep = audio; }}
+                />
+            </div>
         </div>
+
     )
 }
 
