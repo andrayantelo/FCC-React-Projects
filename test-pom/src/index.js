@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import './index.css';
 
 
@@ -42,6 +43,19 @@ const tick = () => {
     return {
         type: TICKED,
         payload: Date.now()
+    }
+}
+
+export const checkClock = (beep) => {
+    return (dispatch, getState) => {
+        const state = getState();
+
+        if (state.timer.displayTime === 1000) {
+            beep();
+        }
+        else if (state.timer.displayTime < 0) {
+            dispatch({type: SESSION_ENDED})
+        }
     }
 }
 
@@ -98,9 +112,9 @@ const timerReducer = (prevState = {}, action) => {
         case TIMER_RESET:
             return {
                 ...prevState,
-                pauseTime: 0,
-                startTime: 0,
-                displayTime: prevState["workLength"],
+                displayTime: 25*60*1000,
+                workLength: 25*60*1000,
+                breakLength: 5*60*1000,
                 timerRunning: false,
                 currentSession: "workLength"
             }
@@ -167,16 +181,6 @@ const timerReducer = (prevState = {}, action) => {
 
 // SET UP STORE
 
-const logger = (store) => (next) => (action) => {
-    console.group(action.type);
-    console.info('Dispatching', action);
-    let result = next(action);
-    console.log("Next state ", store.getState());
-    console.groupEnd();
-    return result;
-};
-
-
 const preloadedState = {
     timer: {
         breakLength: 5*60*1000,
@@ -192,12 +196,11 @@ const rootReducer = combineReducers({
   timer: timerReducer
 });
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // second argument is initial state
 const store = createStore(
     rootReducer,
     preloadedState,
-    composeEnhancers(applyMiddleware(logger)));
+    applyMiddleware(thunk));
 
 
 // CONTROLS COMPONENT
@@ -205,76 +208,69 @@ class Controls extends Component {
     constructor(props) {
         super(props);
         this.myAudio = React.createRef();
-        this.timer = null;
+        this.interval = null;
+    }
+
+    startStop = () => {
+        const { timerRunning } = this.props.timer;
+        const { startTimer, pauseTimer} = this.props;
+        if (!timerRunning) {
+            console.log("start");
+            startTimer();
+            this.runTimer();
+        }
+        else {
+            console.log("Pause");
+            pauseTimer();
+            this.stopTimer();
+        }
+    }
+
+    reset = () => {
+        const { resetTimer } = this.props;
+        resetTimer();
+        this.stopTimer();
     }
 
     runTimer = () => {
-        const { timerRunning, displayTime } = this.props.timer;
-        const { tick, switchSessions } = this.props;
-        console.log(timerRunning);
-        console.log(displayTime);
-        console.log(timerRunning && displayTime >= 0);
-        if (timerRunning && displayTime >= 0) {
-            this.timer = setInterval(() => {
-                tick();
-            }, 1000)
-        }
-        else if (displayTime < 0) {
-            switchSessions();
-            this.playBeep();
-        }
-        else {
-            clearInterval(this.timer);
-        }
+        const { tick, checkClock } = this.props;
+ 
+        this.interval = setInterval(() => {
+            tick();
+            checkClock(this.playBeep);
+        }, 1000)
+        
+
     }
 
-    handleClick = (event) => {
-        const actionType = event.target.id;
-        const { timerRunning } = this.props.timer;
-        const { pauseTimer, startTimer, resetTimer } = this.props;
-        if (actionType === "start_stop") {
-            if (timerRunning) {
-                pauseTimer();
-            }
-            else {
-                startTimer();
-                this.runTimer();
-
-            }
-        }
-        else if (actionType === "pause") {
-            pauseTimer();
-        }
-        else if (actionType === "reset") {
-            resetTimer();
-        }
+    stopTimer = () => {
+        clearInterval(this.interval);
     }
 
     playBeep = () => {
         if (this.myAudio !== null) {
-            this.myAudio.play()
+            this.myAudio.current.play()
           }
     }
 
     render() {
+        console.log(this.props.timer);
         return (
             <div>
                 <div className="controls">
-                    <i
+                    <div
                         id="start_stop"
-                        className="big play circle outline icon"
-                        onClick={this.handleClick}
-                    ></i>
-                    <i
-                        id="pause"
-                        className="big pause circle outline icon"
-                        onClick={this.handleClick}
-                    ></i>
-                    <i
+                        onClick={this.startStop}
+                    >
+                        <i className="big play circle outline icon"></i>
+                        <i className="big pause circle outline icon"></i>
+                    </div>
+                    <div
                         id="reset"
-                        className="big redo icon"
-                        onClick={this.handleClick}
-                    ></i>
+                        onClick={this.reset}
+                    >
+                       <i className="big redo icon"></i>
+                    </div>
                 </div>
                 <div>
                     <audio
@@ -291,17 +287,19 @@ class Controls extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return { timer: state.timer }
+    return {
+        timer: state.timer
+    }
 }
 
 const WrappedControls = connect(
     mapStateToProps,
-    {
-        startTimer,
-        pauseTimer,
-        resetTimer,
-        tick,
-        switchSessions
+    { startTimer,
+      pauseTimer,
+      resetTimer,
+      tick,
+      checkClock,
+      switchSessions
     }
 )(Controls);
 
