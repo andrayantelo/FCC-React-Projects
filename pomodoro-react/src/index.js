@@ -18,11 +18,11 @@ const logger = (store) => (next) => (action) => {
 
 const preloadedState = {
     timer: {
-        breakLength: 2*1000,
-        workLength: 3*1000,
+        breakLength: 5*60*1000,
+        workLength: 25*60*1000,
         startTime: 0,
         timerRunning: false,
-        displayTime: 3*1000,
+        displayTime: 25*60*1000,
         currentSession: "workLength"
     }
 }
