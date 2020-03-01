@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { startTimer, pauseTimer, resetTimer, tick, switchSessions } from '../actions';
 
 const Controls = (props) => {
+    const myAudio = useRef();
+
     const { timerRunning,
             displayTime } = props.timer;
     const { startTimer,
@@ -29,6 +31,12 @@ const Controls = (props) => {
         }
     }
 
+    const playBeep = () => {
+        if (myAudio.current !== null) {
+            myAudio.current.play()
+          }
+    }
+
     useEffect(() => {
         let timer;
         if (timerRunning && displayTime >= 0) {
@@ -37,6 +45,7 @@ const Controls = (props) => {
             }, 1000)
         }
         else if (displayTime < 0) {
+            playBeep();
             switchSessions();
         }
         return () => clearInterval(timer);
@@ -64,9 +73,9 @@ const Controls = (props) => {
             <div>
                 <audio
                     id="beep"
-                    preload="auto" 
+                    type="audio"
                     src="https://goo.gl/65cBl1"
-                    //ref={(audio) => { this.audioBeep = audio; }}
+                    ref={myAudio}
                 />
             </div>
         </div>

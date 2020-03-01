@@ -24,8 +24,7 @@ export const tick = () => {
 
 export const pauseTimer = () => {
     return {
-        type: TIMER_PAUSED,
-        payload: Date.now()
+        type: TIMER_PAUSED
     }
 }
 
