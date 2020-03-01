@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
@@ -202,25 +201,45 @@ const store = createStore(
 
 
 // CONTROLS COMPONENT
-const Controls = (props) => {
-    const myAudio = useRef();
+class Controls extends Component {
+    constructor(props) {
+        super(props);
+        this.myAudio = React.createRef();
+        this.timer = null;
+    }
 
-    const { timerRunning,
-            displayTime } = props.timer;
-    const { startTimer,
-            pauseTimer,
-            resetTimer,
-            tick,
-            switchSessions } = props;
+    runTimer = () => {
+        const { timerRunning, displayTime } = this.props.timer;
+        const { tick, switchSessions } = this.props;
+        console.log(timerRunning);
+        console.log(displayTime);
+        console.log(timerRunning && displayTime >= 0);
+        if (timerRunning && displayTime >= 0) {
+            this.timer = setInterval(() => {
+                tick();
+            }, 1000)
+        }
+        else if (displayTime < 0) {
+            switchSessions();
+            this.playBeep();
+        }
+        else {
+            clearInterval(this.timer);
+        }
+    }
 
-    const handleClick = (event) => {
+    handleClick = (event) => {
         const actionType = event.target.id;
+        const { timerRunning } = this.props.timer;
+        const { pauseTimer, startTimer, resetTimer } = this.props;
         if (actionType === "start_stop") {
             if (timerRunning) {
                 pauseTimer();
             }
             else {
                 startTimer();
+                this.runTimer();
+
             }
         }
         else if (actionType === "pause") {
@@ -231,56 +250,44 @@ const Controls = (props) => {
         }
     }
 
-    const playBeep = () => {
-        if (myAudio.current !== null) {
-            myAudio.current.play()
+    playBeep = () => {
+        if (this.myAudio !== null) {
+            this.myAudio.play()
           }
     }
 
-    useEffect(() => {
-        let timer;
-        if (timerRunning && displayTime >= 0) {
-            timer = setInterval(() => {
-                tick();
-            }, 1000)
-        }
-        else if (displayTime < 0) {
-            playBeep();
-            switchSessions();
-        }
-        return () => clearInterval(timer);
-    }, [timerRunning, displayTime, tick, switchSessions]);
-
-    return (
-        <div>
-            <div className="controls">
-                <i
-                    id="start_stop"
-                    className="big play circle outline icon"
-                    onClick={handleClick}
-                ></i>
-                <i
-                    id="pause"
-                    className="big pause circle outline icon"
-                    onClick={handleClick}
-                ></i>
-                <i
-                    id="reset"
-                    className="big redo icon"
-                    onClick={handleClick}
-                ></i>
-            </div>
+    render() {
+        return (
             <div>
-                <audio
-                    id="beep"
-                    type="audio"
-                    src="https://goo.gl/65cBl1"
-                    ref={myAudio}
-                />
+                <div className="controls">
+                    <i
+                        id="start_stop"
+                        className="big play circle outline icon"
+                        onClick={this.handleClick}
+                    ></i>
+                    <i
+                        id="pause"
+                        className="big pause circle outline icon"
+                        onClick={this.handleClick}
+                    ></i>
+                    <i
+                        id="reset"
+                        className="big redo icon"
+                        onClick={this.handleClick}
+                    ></i>
+                </div>
+                <div>
+                    <audio
+                        id="beep"
+                        type="audio"
+                        src="https://goo.gl/65cBl1"
+                        ref={this.myAudio}
+                    />
+                </div>
             </div>
-        </div>
 
-    )
+        )
+    }
 }
 
 const mapStateToProps = (state) => {
