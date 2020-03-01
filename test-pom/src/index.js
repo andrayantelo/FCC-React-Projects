@@ -101,7 +101,9 @@ const timerReducer = (prevState = {}, action) => {
                 ...prevState,
                 pauseTime: 0,
                 startTime: 0,
-                displayTime: prevState["workLength"],
+                workLength: 25*60*1000,
+                breakLength: 5*60*1000,
+                displayTime: 25*60*1000,
                 timerRunning: false,
                 currentSession: "workLength"
             }
@@ -204,7 +206,7 @@ const store = createStore(
 // CONTROLS COMPONENT
 const Controls = (props) => {
     const myAudio = useRef();
-
+    
     const { timerRunning,
             displayTime } = props.timer;
     const { startTimer,
