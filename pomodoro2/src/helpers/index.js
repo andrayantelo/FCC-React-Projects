@@ -16,7 +16,10 @@ export const formatTime = (milliseconds) => {
     //let seconds = leadingZero(Math.round((milliseconds%60000)/1000));
     let seconds = leadingZero(Math.floor((milliseconds/1000)%60));
     let minutes = Math.floor(milliseconds/(1000*60)%60);
-    
+    //let seconds = ("0" + (Math.floor((milliseconds / 1000) % 60) % 60)).slice(-2);
+    //let minutes = ("0" + Math.floor((milliseconds / 60000) % 60)).slice(-2);
+    //let hours = ("0" + Math.floor((timerTime / 3600000) % 60)).slice(-2);
+
     return `${minutes}:${seconds}`;
 }
 
